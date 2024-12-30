@@ -249,9 +249,24 @@ class AsyncLlamaStackAsLibraryClient(AsyncLlamaStackClient):
         self.custom_provider_registry = custom_provider_registry
 
     async def initialize(self):
-        self.impls = await construct_stack(
-            self.config, self.custom_provider_registry
-        )
+        try:
+            self.impls = await construct_stack(
+                self.config, self.custom_provider_registry
+            )
+        except ModuleNotFoundError as _e:
+            cprint(
+                "Using llama-stack as a library requires installing dependencies depending on the template (providers) you choose.\n",
+                "yellow",
+            )
+            if self.config_path_or_template_name.endswith(".yaml"):
+                print_pip_install_help(self.config.providers)
+            else:
+                prefix = "!" if in_notebook() else ""
+                cprint(
+                    f"Please run:\n\n{prefix}llama stack build --template {self.config_path_or_template_name} --image-type venv\n\n",
+                    "yellow",
+                )
+            return False
 
         if Api.telemetry in self.impls:
             setup_logger(self.impls[Api.telemetry])
