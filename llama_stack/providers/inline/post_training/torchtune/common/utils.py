@@ -48,7 +48,7 @@ MODEL_CONFIGS: Dict[str, ModelConfig] = {
         tokenizer_type=llama3_tokenizer,
         checkpoint_type="LLAMA3_2",
     ),
-    "Llama-3-8B-Instruct": ModelConfig(
+    "Llama3.1-8B-Instruct": ModelConfig(
         model_definition=lora_llama3_8b,
         tokenizer_type=llama3_tokenizer,
         checkpoint_type="LLAMA3",
