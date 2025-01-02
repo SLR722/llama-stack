@@ -83,7 +83,6 @@ BuildTokenizerCallable = Callable[..., Llama3Tokenizer]
 
 def _validate_model_id(model_id: str) -> Model:
     model = resolve_model(model_id)
-    print('print model', model.core_model_id.value)
     if model is None or model.core_model_id.value not in MODEL_CONFIGS:
         raise ValueError(f"Model {model_id} is not supported.")
     return model
