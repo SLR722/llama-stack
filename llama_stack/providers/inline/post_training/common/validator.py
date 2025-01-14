@@ -9,7 +9,11 @@
 #
 # This source code is licensed under the terms described in the LICENSE file in
 # the root directory of this source tree.
-from llama_stack.apis.common.type_system import StringType
+from llama_stack.apis.common.type_system import (
+    ChatCompletionInputType,
+    DialogType,
+    StringType,
+)
 from llama_stack.apis.datasets import Datasets
 from llama_stack.providers.utils.common.data_schema_validator import (
     ColumnName,
@@ -19,13 +23,13 @@ from llama_stack.providers.utils.common.data_schema_validator import (
 EXPECTED_DATASET_SCHEMA = {
     "instruct": [
         {
-            ColumnName.chat_completion_input.value: StringType(),
+            ColumnName.chat_completion_input.value: ChatCompletionInputType(),
             ColumnName.expected_answer.value: StringType(),
         }
     ],
     "dialog": [
         {
-            ColumnName.dialog.value: StringType(),
+            ColumnName.dialog.value: DialogType(),
         }
     ],
 }

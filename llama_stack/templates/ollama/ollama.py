@@ -109,18 +109,39 @@ def get_distribution_template() -> DistributionTemplate:
                         embedding_provider,
                     ],
                     "memory": [memory_provider],
+                    "safety": [
+                        Provider(
+                            provider_id="llama-guard",
+                            provider_type="inline::llama-guard",
+                            config={},
+                        ),
+                        Provider(
+                            provider_id="code-scanner",
+                            provider_type="inline::code-scanner",
+                            config={},
+                        ),
+                    ],
                 },
                 default_models=[
                     inference_model,
                     safety_model,
                     embedding_model,
                 ],
-                default_shields=[ShieldInput(shield_id="${env.SAFETY_MODEL}")],
+                default_shields=[
+                    ShieldInput(
+                        shield_id="${env.SAFETY_MODEL}",
+                        provider_id="llama-guard",
+                    ),
+                    ShieldInput(
+                        shield_id="CodeScanner",
+                        provider_id="code-scanner",
+                    ),
+                ],
                 default_tool_groups=default_tool_groups,
             ),
         },
         run_config_env_vars={
-            "LLAMASTACK_PORT": (
+            "LLAMA_STACK_PORT": (
                 "5001",
                 "Port for the Llama Stack distribution server",
             ),
