@@ -585,6 +585,7 @@ class LoraFinetuningSingleDevice:
         self._model.to("cpu")
         del self._model
         gc.collect()
+        torch.cuda.empty_cache()
 
         return (memory_stats, checkpoints)
 
